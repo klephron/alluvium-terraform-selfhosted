@@ -13,7 +13,7 @@
       <xsl:apply-templates select="@*|node()" />
       <qemu:commandline>
         <qemu:arg value="-netdev" />
-        <qemu:arg value="user,id=net1${join("", [for p in hostfwd : ",hostfwd=tcp::${p.from}-:${p.to}"])}" />
+        <qemu:arg value="user,id=net1${join("",[for p in hostfwd :",hostfwd=tcp::${p.from}-:${p.to},hostfwd=udp::${p.from}-:${p.to}"])}" />
         <qemu:arg value="-device" />
         <qemu:arg value="virtio-net-pci,netdev=net1,bus=pci.0,addr=0x10" />
       </qemu:commandline>
