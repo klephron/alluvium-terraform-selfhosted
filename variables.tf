@@ -1,14 +1,12 @@
 variable "selfhosted" {
   type = object({
     pools = object({
-      images = object({
-        name = string
+      images = map(object({
         path = string
-      })
-      disks = object({
-        name = string
+      }))
+      disks = map(object({
         path = string
-      })
+      }))
     })
     vms = object({
       ubuntu = map(object({
@@ -19,24 +17,14 @@ variable "selfhosted" {
         base = object({
           source = string
         })
-        settings = map(object({
-          memory    = number
-          vcpu      = number
-          disk_size = number
-          hostfwd = list(object({
-            from = number
-            to   = number
-          }))
+        memory    = number
+        vcpu      = number
+        disk_size = number
+        hostfwd = list(object({
+          from = number
+          to   = number
         }))
       }))
     })
   })
-  default = {
-    pools = {
-      images = {}
-      disks  = {}
-    }
-    vms = {
-    }
-  }
 }

@@ -10,7 +10,7 @@ data "template_file" "network_config" {
 resource "libvirt_volume" "image_base" {
   for_each = var.vms
 
-  name   = "base-${each.key}"
+  name   = "base-${each.key}.img"
   source = each.value.base.source
   pool   = each.value.pools.images
 }
@@ -19,7 +19,7 @@ resource "libvirt_volume" "image_base" {
 resource "libvirt_cloudinit_disk" "image_cloudinit" {
   for_each = var.vms
 
-  name           = "commoninit-${each.key}.iso"
+  name           = "commoninit-${each.key}.img"
   user_data      = data.template_file.user_data.rendered
   network_config = data.template_file.network_config.rendered
   pool           = each.value.pools.images
@@ -49,7 +49,7 @@ resource "libvirt_domain" "vm" {
   cloudinit = libvirt_cloudinit_disk.image_cloudinit[each.key].id
 
   disk {
-    volume_id = libvirt_volume.vm[each.key].id
+    volume_id = libvirt_volume.disk[each.key].id
   }
 
   network_interface {
