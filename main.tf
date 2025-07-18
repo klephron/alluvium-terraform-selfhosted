@@ -2,14 +2,14 @@ module "pool" {
   source = "./modules/libvirt_pool"
 
   images = {
-    for k, v in var.selfhosted.pools.images :
+    for k, v in var.pools.images :
     k => {
       name = k
       path = v.path
     }
   }
   disks = {
-    for k, v in var.selfhosted.pools.disks :
+    for k, v in var.pools.disks :
     k => {
       name = k
       path = v.path
@@ -21,7 +21,7 @@ module "ubuntu" {
   source = "./modules/libvirt_ubuntu"
 
   vms = {
-    for k, v in var.selfhosted.vms.ubuntu :
+    for k, v in var.vms.ubuntu :
     k => {
       pools = {
         images = module.pool.images[v.pools.images].name
