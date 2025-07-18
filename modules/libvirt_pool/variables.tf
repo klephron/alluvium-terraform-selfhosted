@@ -1,13 +1,13 @@
 variable "images" {
-  type = object({
+  type = map(object({
     name = string
     path = string
-  })
+  }))
 }
 
 variable "disks" {
-  type = object({
+  type = map(object({
     name = string
     path = string
-  })
+  }))
 }

@@ -1,15 +1,19 @@
 resource "libvirt_pool" "images" {
-  name = var.images.name
+  for_each = var.images
+
+  name = each.value.name
   type = "dir"
   target {
-    path = var.images.path
+    path = each.value.path
   }
 }
 
 resource "libvirt_pool" "disks" {
-  name = var.disks.name
+  for_each = var.disks
+
+  name = each.value.name
   type = "dir"
   target {
-    path = var.disks.path
+    path = each.value.path
   }
 }

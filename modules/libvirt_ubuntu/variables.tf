@@ -1,23 +1,12 @@
-variable "images" {
-  type = object({
-    name = string
-  })
-}
-
-variable "disks" {
-  type = object({
-    name = string
-  })
-}
-
-variable "base" {
-  type = object({
-    source = string
-  })
-}
-
-variable "settings" {
+variable "vms" {
   type = map(object({
+    pools = {
+      images = string
+      disks  = string
+    }
+    base = {
+      source = string
+    }
     vcpu      = number
     memory    = number      # in MB
     disk_size = number      # in GB
