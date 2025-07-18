@@ -1,5 +1,5 @@
 module "pool" {
-  source = "../libvirt_pool"
+  source = "./libvirt_pool"
 
   images = {
     name = var.vms.pools.images.name
@@ -12,7 +12,7 @@ module "pool" {
 }
 
 module "ubuntu" {
-  source = "../libvirt_ubuntu"
+  source = "./libvirt_ubuntu"
 
   images = {
     name = module.pool.images.name
