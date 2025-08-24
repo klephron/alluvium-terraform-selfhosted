@@ -19,7 +19,7 @@ resource "libvirt_pool" "disks" {
 }
 
 resource "libvirt_network" "bridges" {
-  for_each = var.networks
+  for_each = var.bridges
 
   name   = each.key
   mode   = "none"

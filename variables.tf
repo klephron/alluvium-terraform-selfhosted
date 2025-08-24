@@ -7,9 +7,13 @@ variable "pools" {
       path = string
     }))
   })
+  default = {
+    images = {}
+    disks  = {}
+  }
 }
 
-variable "networks" {
+variable "bridges" {
   type = map(object({
     bridge = string
   }))
@@ -34,4 +38,5 @@ variable "vms" {
     })), [])
     bridges = optional(list(string), [])
   }))
+  default = {}
 }

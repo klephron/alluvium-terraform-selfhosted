@@ -17,13 +17,11 @@ module "selfhosted" {
       }
     }
   }
-
-  networks = {
+  bridges = {
     "${local.alluvium_net_1}" = {
       bridge = "br-alluvium-1"
     }
   }
-
   vms = {
     alluvium-test-basic-1 = {
       pools = {
