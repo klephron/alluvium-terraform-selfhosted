@@ -1,3 +1,7 @@
+locals {
+  alluvium_net_1 = "alluvium-net-1"
+}
+
 module "selfhosted" {
   source = "../.."
 
@@ -14,6 +18,12 @@ module "selfhosted" {
     }
   }
 
+  networks = {
+    "${local.alluvium_net_1}" = {
+      bridge = "br-alluvium-1"
+    }
+  }
+
   vms = {
     alluvium-test-basic-1 = {
       pools = {
@@ -26,7 +36,6 @@ module "selfhosted" {
       vcpu      = 2
       memory    = 2048
       disk_size = 30
-      hostfwd   = []
     }
     alluvium-test-basic-2 = {
       pools = {
@@ -39,7 +48,9 @@ module "selfhosted" {
       vcpu      = 2
       memory    = 2048
       disk_size = 30
-      hostfwd   = []
+      bridges = [
+        local.alluvium_net_1
+      ]
     }
     alluvium-test-basic-3 = {
       pools = {
@@ -61,6 +72,9 @@ module "selfhosted" {
           from = 19999
           to   = 19999
         }
+      ]
+      bridges = [
+        local.alluvium_net_1
       ]
     }
   }

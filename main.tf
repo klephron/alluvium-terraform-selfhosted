@@ -18,6 +18,14 @@ resource "libvirt_pool" "disks" {
   }
 }
 
+resource "libvirt_network" "bridges" {
+  for_each = var.networks
+
+  name   = each.key
+  mode   = "none"
+  bridge = each.value.bridge
+}
+
 data "template_file" "user_data" {
   template = file("${path.module}/files/cloud_init.cfg")
 }
@@ -75,6 +83,14 @@ resource "libvirt_domain" "vm" {
   network_interface {
     network_name   = "default"
     wait_for_lease = true
+  }
+
+  dynamic "network_interface" {
+    for_each = coalesce(each.value.bridges, [])
+    iterator = bridge
+    content {
+      network_id = libvirt_network.bridges[bridge.value].id
+    }
   }
 
   console {

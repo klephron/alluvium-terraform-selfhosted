@@ -9,6 +9,13 @@ variable "pools" {
   })
 }
 
+variable "networks" {
+  type = map(object({
+    bridge = string
+  }))
+  default = {}
+}
+
 variable "vms" {
   type = map(object({
     pools = object({
@@ -21,9 +28,10 @@ variable "vms" {
     memory    = number
     vcpu      = number
     disk_size = number
-    hostfwd = list(object({
+    hostfwd = optional(list(object({
       from = number
       to   = number
-    }))
+    })), [])
+    bridges = optional(list(string), [])
   }))
 }
