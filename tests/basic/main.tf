@@ -3,67 +3,65 @@ module "selfhosted" {
 
   pools = {
     images = {
-      alluvium-test-images = {
-        path = "/opt/alluvium/test/images"
+      "${var.images_pool}" = {
+        path = "${var.pools_path_prefix}/images"
       },
     }
     disks = {
-      alluvium-test-disks = {
-        path = "/opt/alluvium/test/disks"
+      "${var.disks_pool}" = {
+        path = "${var.pools_path_prefix}/disks"
       }
     }
   }
 
   vms = {
-    ubuntu = {
-      test-basic-1 = {
-        pools = {
-          images = "alluvium-test-images"
-          disks  = "alluvium-test-disks"
-        }
-        base = {
-          source = "/home/nikit/vms/images/focal-server-cloudimg-amd64-disk-kvm.img"
-        }
-        vcpu      = 2
-        memory    = 2048
-        disk_size = 30
-        hostfwd   = []
+    alluvium-test-basic-1 = {
+      pools = {
+        images = var.images_pool
+        disks  = var.disks_pool
       }
-      test-basic-2 = {
-        pools = {
-          images = "alluvium-test-images"
-          disks  = "alluvium-test-disks"
-        }
-        base = {
-          source = "/home/nikit/vms/images/focal-server-cloudimg-amd64-disk-kvm.img"
-        }
-        vcpu      = 2
-        memory    = 2048
-        disk_size = 30
-        hostfwd   = []
+      base = {
+        source = var.vms_base_source
       }
-      test-basic-3 = {
-        pools = {
-          images = "alluvium-test-images"
-          disks  = "alluvium-test-disks"
-        }
-        base = {
-          source = "/home/nikit/vms/images/focal-server-cloudimg-amd64-disk-kvm.img"
-        }
-        vcpu      = 2
-        memory    = 2048
-        disk_size = 30
-        hostfwd = [
-          {
-            from = 19998
-            to   = 19998
-          },
-          {
-            from = 19999
-            to   = 19999
-          }
-        ]
+      vcpu      = 2
+      memory    = 2048
+      disk_size = 30
+      hostfwd   = []
+    }
+    alluvium-test-basic-2 = {
+      pools = {
+        images = var.images_pool
+        disks  = var.disks_pool
       }
+      base = {
+        source = var.vms_base_source
+      }
+      vcpu      = 2
+      memory    = 2048
+      disk_size = 30
+      hostfwd   = []
+    }
+    alluvium-test-basic-3 = {
+      pools = {
+        images = var.images_pool
+        disks  = var.disks_pool
+      }
+      base = {
+        source = var.vms_base_source
+      }
+      vcpu      = 2
+      memory    = 2048
+      disk_size = 30
+      hostfwd = [
+        {
+          from = 19998
+          to   = 19998
+        },
+        {
+          from = 19999
+          to   = 19999
+        }
+      ]
     }
   }
 }

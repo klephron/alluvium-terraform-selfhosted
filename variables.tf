@@ -10,22 +10,20 @@ variable "pools" {
 }
 
 variable "vms" {
-  type = object({
-    ubuntu = map(object({
-      pools = object({
-        images = string
-        disks  = string
-      })
-      base = object({
-        source = string
-      })
-      memory    = number
-      vcpu      = number
-      disk_size = number
-      hostfwd = list(object({
-        from = number
-        to   = number
-      }))
+  type = map(object({
+    pools = object({
+      images = string
+      disks  = string
+    })
+    base = object({
+      source = string
+    })
+    memory    = number
+    vcpu      = number
+    disk_size = number
+    hostfwd = list(object({
+      from = number
+      to   = number
     }))
-  })
+  }))
 }

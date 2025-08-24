@@ -1,5 +1,9 @@
 output "vms" {
+  description = "VM details"
   value = {
-    ubuntu = module.ubuntu.vms
+    for name, settings in var.vms : name => {
+      name = libvirt_domain.vm[name].name,
+      ip   = libvirt_domain.vm[name].network_interface[0].addresses[0]
+    }
   }
 }
